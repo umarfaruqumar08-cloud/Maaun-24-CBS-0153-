@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>📝 Register New Patient</h2>
+
+<form method="POST" action="/register">
+    <label for="name">Full Name:</label>
+    <input type="text" id="name" name="name" required placeholder="Enter patient's full name">
+    
+    <label for="age">Age:</label>
+    <input type="number" id="age" name="age" required min="1" max="120" placeholder="Enter age in years">
+    
+    <label for="symptoms">Symptoms:</label>
+    <textarea id="symptoms" name="symptoms" required rows="4" placeholder="Describe the patient's symptoms..."></textarea>
+    
+    <button type="submit">Register to Queue</button>
+</form>
+
+<div style="margin-top: 20px;">
+    <a href="/">← Back to Queue View</a>
+</div>
+{% endblock %}

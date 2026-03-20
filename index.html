@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Statistics at the top -->
+<div class="stats">
+    <div class="stat-box">
+        <h3>{{ queue_size }}</h3>
+        <p>Waiting Now</p>
+    </div>
+    <div class="stat-box">
+        <h3>{{ total_served }}</h3>
+        <p>Total Served Today</p>
+    </div>
+</div>
+
+<!-- Current Patient Section -->
+{% if current_patient %}
+<div class="card current">
+    <h3>🩺 Currently Serving</h3>
+    <p><strong>Name:</strong> {{ current_patient.name }}</p>
+    <p><strong>Age:</strong> {{ current_patient.age }} years</p>
+    <p><strong>Symptoms:</strong> {{ current_patient.symptoms }}</p>
+    <p><strong>Arrived:</strong> {{ current_patient.arrival_time.strftime('%H:%M:%S') }}</p>
+    <p><strong>Patient ID:</strong> {{ current_patient.id }}</p>
+    
+    <a href="/serve_next">
+        <button class="serve-btn">✅ Complete & Serve Next Patient</button>
+    </a>
+</div>
+{% else %}
+<div class="card empty-state">
+    <h3>No patient currently being served</h3>
+    <p>Click "Register Patient" to add someone to the queue.</p>
+</div>
+{% endif %}
+
+<!-- Waiting Queue Section -->
+<h2>🕐 Waiting Queue (First In, First Out)</h2>
+
+{% if patients %}
+    {% for position, patient in patients %}
+    <div class="card queue-item">
+        <h4>Position #{{ position }}</h4>
+        <p><strong>{{ patient.name }}</strong> ({{ patient.age }} years)</p>
+        <p>Symptoms: {{ patient.symptoms }}</p>
+        <p>ID: {{ patient.id }} | Arrived: {{ patient.arrival_time.strftime('%H:%M:%S') }}</p>
+    </div>
+    {% endfor %}
+{% else %}
+    <div class="card empty-state">
+        <p>No patients waiting. Great job! 🎉</p>
+    </div>
+{% endif %}
+{% endblock %}
